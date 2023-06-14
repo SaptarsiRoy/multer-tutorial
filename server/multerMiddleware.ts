@@ -9,7 +9,7 @@ const DIR: string = __dirname + "/uploads/";
 // Set up storage for uploaded files
 const storage = multer.diskStorage({
     destination: (req: any, file: any, cb: any) => {
-        cb(null, 'uploads/');
+        cb(null, DIR);
     },
     filename: (req: any, file: any, cb: any) => {
         cb(null, Date.now() + '-' + file.originalname);
