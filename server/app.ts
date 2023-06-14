@@ -1,6 +1,7 @@
-// require express and path
+// imports
 import express from "express";
 import path from "path";
+import cors from "cors";
 
 // import multer middleware
 import upload from "./multerMiddleware";
@@ -14,6 +15,9 @@ const port = 5000;
 // create express app
 const app = express();
 
+// use cors
+app.use(cors());
+
 // add reactjs static files
 app.use(express.static(path.join(__dirname, "..", "/build")));
 
@@ -23,7 +27,7 @@ app.get("/", (req: any, res: any) => {
 });
 
 // post request to upload a file
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post('/upload', upload.array('file'), (req, res) => {
     // Handle the uploaded file
     res.json({ message: 'File uploaded successfully!' });
 })
