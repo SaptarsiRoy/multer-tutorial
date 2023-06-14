@@ -1,5 +1,8 @@
 import multer from "multer";
 
+// import __dirname
+import __dirname from "./dirname";
+
 // set the directory for the uploads to the uploaded to
 const DIR: string = __dirname + "/uploads/";
 

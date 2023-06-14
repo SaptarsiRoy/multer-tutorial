@@ -5,11 +5,11 @@ import path from "path";
 // import multer middleware
 import upload from "./multerMiddleware";
 
+// import __dirname
+import __dirname from "./dirname";
 
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
+// Define the port to run on
+const port = 5000;
 
 // create express app
 const app = express();
@@ -30,6 +30,6 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 
 // listen on port 3000
-app.listen(3000, () => {
-    console.log("Server started!");
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
 });
