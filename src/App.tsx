@@ -62,11 +62,17 @@ function App() {
 
     // send post request to server to upload files at /upload
     axios
-      .post("http://localhost:5000/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        process.env.NODE_ENV === "production"
+          ? "/upload"
+          : "http://localhost:5000/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((response) => {
         // handle the response
         console.log(response.data);
