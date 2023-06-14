@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 function App() {
   // create a ref to store the fileInput DOM element
@@ -14,7 +15,6 @@ function App() {
   const handleDrag = function (event: any) {
     event.preventDefault();
     event.stopPropagation();
-    console.log(event.type);
     if (event.type === "dragenter" || event.type === "dragover") {
       setDragActive(true);
     } else if (event.type === "dragleave") {
@@ -43,16 +43,41 @@ function App() {
   // function to log the name of files
   const handleFileChosen = (event: any) => {
     const file = event.target.files || event.dataTransfer.files;
-    console.log(file[0]);
-
     // add new files to state
-    setFiles([...files , file[0]]);
+    setFiles([...files, file[0]]);
   };
 
   // function to upload files to server
-  const handleUpload = (event: any) => {
+  const handleUpload = async (event: any) => {
     event.preventDefault();
-    console.log(files);
+    if (files.length === 0) {
+      return;
+    }
+
+    // create a new FormData object and append the file to it
+    const formData: any = new FormData();
+    files.forEach((file) => {
+      formData.append("file", file);
+    });
+
+    // send post request to server to upload files at /upload
+    axios
+      .post("http://localhost:5000/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        // handle the response
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // handle errors
+        console.log(error);
+      });
+
+    // reset files state
+    // setFiles([]);
   };
 
   return (
